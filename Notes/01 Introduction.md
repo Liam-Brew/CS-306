@@ -1,4 +1,4 @@
-# Lecture 01
+# Lecture 01: Introduction
 
 ## Outsourced Computation
 
