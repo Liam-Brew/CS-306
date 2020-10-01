@@ -204,3 +204,93 @@ PRG-based symmetric encryption
 
 - on the fly computation of new pseudorandom bits, no IV needed, plain-secure
 - random IV used for every new message is sent along with ciphertext
+
+## Formal Treatment in Modern Cryptography
+
+formal definitions: what it means to be secure
+
+prciese: which forms of attacks are/are not allowed
+
+provable security: why a candidate solution is/is not secure
+
+## Block Ciphers
+
+### Realizing Ideal Block Ciphers in Practice
+
+We want a random mapping of n-bit inputs to n-but outputs
+
+- there are ~2^(n2^n) possible such mappings
+- none of the above can be implemented in practice
+
+Instead, we use a keyed function Fk : {0,1}^n -> {0,1}^n
+
+- indexed by a t-bit key k
+- there are only 2^t such keyed function
+- a random key selects a "random-enough" mapping or a pseudorandom function
+
+### Generic PRF-based Symmetric Encryption
+
+**Fixed-length** message encryption
+
+Encryption scheme is advanced-secure as long as the underlying PRF is secure
+
+### Modes of Operations (I)
+
+ECB: electronic code block
+
+- insecure, of only historic value
+- deterministic, thus not CPA-secure
+- not EAV secure
+
+Strengths and weaknesses of ECB
+
+Strengths
+
+- very simple
+- allows for parallel encryptions
+
+### Modes of Operations (II)
+
+CBC: cipher block chaining
+
+- CPA-secure if Fk a permutation
+- uniform IV
+  - otherwise no security breaks
+
+Chained CBC
+
+- use last block ciphertext of current message as IV of next message
+- saves bandwith but not CPA-secure
+
+### Modes of Operations (III)
+
+OFB: output feedback
+
+- uniform IV
+- no need message length to be multiple of n
+- resembles synchronized stream-cipher mode
+- CPA-secure if Fk is PRF
+
+### Mode of Operations (IV)
+
+CTR: counter mode (best)
+
+- uniform ctr
+- no need message length to be multiple of n
+- resembles synchronized stream-cipher mode
+- CPA-secure if Fk is PRF
+- no need for Fk to be invertible
+- parallelizable
+
+## Symmetric Encryption
+
+Techniques used in symmetric encryption
+
+- substitution: exchanging one set of bits for another
+  - substitution boxes:
+    - substitution can also be done on binary numbers
+    - such substitutions are usually described by substitution boxes, or S-boxes
+- transportation: rearranging the order of the ciphertext bits to break any regularities in the underlying plaintext
+- confusion: enforce complex functional relationship between the plaintext/key pair and cipher text
+  - e.g. flipping plaintext or key bit causes unpredictable changes to new ciphertext
+- diffusion: distributes information from single plaintext characters over entire ciphertext output
